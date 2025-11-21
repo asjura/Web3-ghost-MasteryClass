@@ -1,0 +1,59 @@
+```markdown
+# Web3 Ghostwriting Mastery — Command Center
+
+This repository contains a single-file static dashboard built with React (UMD) + Tailwind (CDN), designed to be deployed as a GitHub Pages site.
+
+Features
+- Curriculum tracker (persisted to localStorage)
+- Copy auditor that highlights "weak" vs "power" lexicon items
+- Algorithm cheatsheet and quick actions sidebar
+- Lightweight (single index.html), works locally or on static hosts
+
+Files
+- index.html — the full app (open in browser)
+- Dockerfile — optional container to serve the static file
+- .github/workflows/pages.yml — GitHub Actions workflow to publish to GitHub Pages on push to main
+- push.sh — helper script to create the repo with gh and push
+
+How to run locally
+1. Easiest: open `index.html` directly in your browser.
+   - Double-click or File > Open... (some browsers block features with file://; see below)
+
+2. Recommended: serve with a simple static server
+   - Python 3:
+     - `python -m http.server 8000`
+     - Open http://localhost:8000/index.html
+   - Node (http-server):
+     - `npx http-server . -c-1`
+     - Open the printed URL
+
+3. Docker (optional)
+   - Build: `docker build -t web3-mastery .`
+   - Run: `docker run --rm -p 8080:80 web3-mastery`
+   - Open http://localhost:8080
+
+Publish to GitHub Pages (automated)
+1. Ensure you have the GitHub CLI installed and authenticated: `gh auth login`.
+2. Run `./push.sh` (make it executable first: `chmod +x push.sh`) — it will:
+   - create a repo `asjura/web3-ghostwriting-mastery` (public) if it doesn't exist
+   - commit and push the files to the `main` branch
+   - the included GitHub Actions workflow will publish the repository root to Pages automatically
+
+If you prefer to push manually
+1. Create a repo on GitHub: web3-ghostwriting-mastery
+2. Run:
+   ```
+   git init
+   git add .
+   git commit -m "chore: add static dashboard + GitHub Pages workflow"
+   git branch -M main
+   git remote add origin git@github.com:asjura/web3-ghostwriting-mastery.git
+   git push -u origin main
+   ```
+
+Notes
+- Progress is saved to localStorage under `web3_mastery_progress`.
+- To reset progress, use the "Reset Progress" button in the sidebar or clear localStorage in your browser devtools.
+- Lexicon lists are defined in the `index.html` source (LEXICON constant). Edit to extend or customize logic.
+- This is a static demo — no backend or authentication is included.
+```
